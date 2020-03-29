@@ -1,0 +1,446 @@
+%------------------------------------------------------------------------------
+% Rozmiary "obszarów roboczych", skład tekstu.
+% SEC: rozmiary "obszarów roboczych", skład tekstu
+%------------------------------------------------------------------------------
+
+\usepackage{geometry}  % ustawienie rozmiaru marginesów, nagłówka i stopki itp.
+\geometry{lmargin=20mm, rmargin=20mm, tmargin=15mm, bmargin=20mm, foot=10mm, head=10mm}
+
+\usepackage{indentfirst}  % domyślne wcinanie pierwszego akapitu w bloku tekstu
+
+%------------------------------------------------------------------------------
+% Kodowanie znaków, lokalizacja.
+% SEC: kodowanie znaków, lokalizacja
+%------------------------------------------------------------------------------
+
+\usepackage[utf8]{inputenc}  % wybierz kodowanie UTF-8
+\usepackage{mathptmx}  % używaj czcionki Times jako domyślnej dla tekstu
+\usepackage[T1]{fontenc}  % umożliwia wstawianie znaków z kodowania 8-bitowego (domyślnie jest 7-bitowe, przez co część znaków musi być wstawiana za pomocą kombinacji np. \l{} - "ł", \"{o} - "ö"; zob. https://tex.stackexchange.com/a/677/44391)
+\usepackage[english]{babel}  % ustaw angielską lokalizację
+
+%------------------------------------------------------------------------------
+% Podstawowe pakiety.
+% SEC: podstawowe pakiety
+%------------------------------------------------------------------------------
+
+\usepackage{color}  % STD
+\usepackage[table,usenames,dvipsnames]{xcolor}
+
+\usepackage[inline,shortlabels]{enumitem}  % zwiększa kontrolę użytkownika nad środowiskami `itemize` i `enumerate` (następca pakietu `enumerate`)
+
+%------------------------------------------------------------------------------
+% Tworzenie i konfiguracja tabel.
+% SEC: tabele
+%------------------------------------------------------------------------------
+
+%\usepackage{hhline}
+%\usepackage{longtable}
+\usepackage{array}  % STD
+\usepackage{tabularx}  % STD
+\usepackage{multirow}  % umożliwia wstawienie tekstu zajmującego kilka wierszy [\multirow] - wymagane przez pakiet `makecell`
+\usepackage{booktabs}  % poprawia estetykę tabel [\toprule, \midrule, \bottomrule, ...]
+\usepackage{makecell}  % estetyczne, konfigurowalne formatowanie nagłówków tabeli [\thead]; umożliwia scalanie komórek [\makecell]
+\usepackage[flushleft]{threeparttable}  % tabela z przypisami
+
+% Definicje nowych typów kolumn w oparciu o typ `X` z pakietu `tabularx` (zob. https://en.wikibooks.org/wiki/LaTeX/Tables#The_tabularx_package)
+\def\tabularxcolumn#1{m{#1}}  % spraw, aby kolumna typu X korzystała z `m` (`\parbox[c]`) zamiast z `p` (`parbox[t]`)
+\newcolumntype{C}[1]{>{\hsize=#1\hsize\centering\arraybackslash}X}  % kolumna z wyśrodkowaną zawartością, o zadanej proporcji szerokości (zob. przykład z macierzą pomyłek)
+\newcolumntype{Y}{>{\centering\arraybackslash}X}  % kolumna z wyśrodkowaną zawartością, bez precyzowania proporcji szerokości (zob. przykład z macierzą pomyłek)
+
+\newlength{\multirowverticaloffset}
+\setlength{\multirowverticaloffset}{2mm}
+
+%------------------------------------------------------------------------------
+% LaTeX (techniczne).
+% SEC: LaTeX (techniczne)
+%------------------------------------------------------------------------------
+
+\usepackage{keyval,xparse}  % definiowanie nowych poleceń
+
+\usepackage{cprotect}  % Pozwala na użycie środowiska `verbatim` w podpisach ilustracji, w tytułach sekcji itd. [\cprotect\caption{...}, \cprotect\section{...}]
+
+\usepackage{courier}  % umożliwia korzystanie z czcionki Courier
+
+\usepackage{footnote}  % lepsza kontrola przypisów w stopce
+
+\usepackage{filecontents}  % emulowanie tworzenia pliku z danymi (np. pod kątem generowania wykresów) z poziomu kodu LaTeX-a
+
+%------------------------------------------------------------------------------
+% Matematyka.
+% SEC: matematyka
+%------------------------------------------------------------------------------
+
+\usepackage{mathtools}  % STD
+\usepackage{amsfonts}  % STD
+\usepackage{amsmath}  % STD
+\usepackage{amsthm}  % STD
+
+%------------------------------------------------------------------------------
+% Symbole.
+% SEC: symbole
+%------------------------------------------------------------------------------
+
+\usepackage{textcomp}  % \textdegree (symbol stopni poza środowiskiem matematycznym)
+\usepackage{gensymb}  % symbole matematyczne: \degree, \celsius, \micro, ...
+
+%------------------------------------------------------------------------------
+% Odnośniki.
+% SEC: odnośniki
+%------------------------------------------------------------------------------
+
+\usepackage{url}  % definiuje polecenie `\url` służące do wyświetlania m.in. adresów e-mail, odnośników URL i ścieżek do plików - z możliwością podziału długiego adresu (domyślnie LaTeX nie dzieli takich ścieżek)
+\renewcommand\UrlFont{\rmfamily\itshape}  % wyświetlaj adresy URL za pomocą czcionki Times z italikami
+
+\usepackage{nameref}  % umożliwia wstawianie odnośników do sekcji z wyświetlaną nazwą sekcji 
+
+\usepackage{hyperref}  % funkcjonalność "klikalnych" odnośników w dokumentach PDF
+%\usepackage[hidelinks]{hyperref}  % wersja bez ramek wokół odnośników
+
+%------------------------------------------------------------------------------
+% Ustawienia ilustracji i ich podpisów.
+% SEC: ilustracje i podpisy
+%------------------------------------------------------------------------------
+
+\usepackage{graphicx}  % STD
+
+\usepackage{float}  % STD
+
+\usepackage[font=small, labelfont=bf, labelsep=period]{caption}  % formatowanie podpisów pod ilustracjami (mała czcionka, wytłuszczony "identyfikator" zakończony kropką - a nie dwukropkiem)
+%\captionsetup[subfigure]{labelfont=md}  % możliwość konfiguracji podpisów pod zadanym typem ilustracji/tabel...
+%\captionsetup{subrefformat=parens}  % spraw, aby domyślnie odnośniki do ilustracji w grupie otaczane były nawiasami okrągłymi
+\captionsetup{margin=2cm, singlelinecheck=on}  % singlelinecheck=on - podpis zawsze wyśrodkowany, gdy mieści się w jednej linii
+
+\usepackage{subcaption}  % tworzenie grup ilustracji [\subfigure]
+%\usepackage{subfig}  % obecnie zaleca się używać pakietu `subcaption` [2018-11-10]
+\usepackage{afterpage}  % wymuszenie wyświetlenia wszystkich ilustracji i kontynuowanie wyświetlania tekstu na tej samej stronie [\afterpage{\clearpage}] https://tex.stackexchange.com/questions/88657/clearpage-without-pagebreak
+
+% The new graphbox package introduces a new (vertical) align key which can be used in \includegraphics options.
+\usepackage{graphbox}
+
+% --------------------------------------
+
+\newlength{\groupwidth}  % szerokość środowiska `figure`
+\newlength{\picwidth}  % szerokość obszaru pojedynczego środowiska `subfigure`
+\newlength{\imgwidth}  % szerokość grafiki w `subfigure`
+\newlength{\imgheight}  % wysokość grafiki w `subfigure`
+
+\newlength{\subfigshsep}  % odstęp między ilustracjami w poziomie
+\newlength{\subfigshsepdef}  % odstęp między ilustracjami w poziomie (predefiniowany)
+\newlength{\subfigsvsep}  % odstęp między ilustracjami w pionie
+\newlength{\subfigsvsepdef}  % odstęp między ilustracjami w pionie (predefiniowany)
+% [NOTE] Użycie dwóch typów długości - o wartościach modyfikowanych na bieżąco
+%	i o wartościach predefiniowanych - pozwala zachować spójność dokumentu.
+
+\setlength{\subfigshsepdef}{0.2cm}
+\setlength{\subfigsvsepdef}{0.3cm}
+
+% Domyślnie `figure` zajmuje 90% szerokości tekstu.
+\setlength{\groupwidth}{0.9\textwidth}
+
+% Konfiguracja środowiska `fbox` (do wyświetlania ramek)
+\setlength{\fboxsep}{0pt}
+\setlength{\fboxrule}{0.5pt}
+
+%------------------------------------------------------------------------------
+% Ustawienia parametrów odstępów i rozmiarów dla tytułów (pod)rozdziałów, czcionki, bibliografii, ilustracji i list - pozwalają "scieśnić" dokument.
+% SEC: odstępy
+%------------------------------------------------------------------------------
+
+\usepackage{titlesec}
+
+% Zmniejsz odstępy wokół list i między punktami listy.
+\setlist{topsep=2pt,itemsep=0.1ex,partopsep=1ex,parsep=0.5ex,leftmargin=0.75cm}
+%\setlength{\itemindent}{-1.5cm}
+
+\newlength{\interpointgap}
+\setlength{\interpointgap}{0.1em}
+
+\setlength\parindent{0.4cm}
+
+% Środowisko `enumerate` wymaga osobnej konfiguracji...
+\setlist[enumerate]{topsep=2pt,itemsep=-1ex,partopsep=1ex,parsep=0.5ex}
+
+% Zdefiniuj "ciasne" środowisko `enumerate` - z minimalnymi odstępami.
+\newenvironment{tight_enumerate}{
+\begin{enumerate}
+	\setlength{\topsep}{4pt}
+	\setlength{\itemsep}{4pt}
+	\setlength{\parskip}{0pt}
+}{\end{enumerate}}
+
+% --------------------------------------
+
+% Zmniejsz odstępy między literami.
+%\usepackage[letterspace=-40]{microtype}
+
+% Zmniejsz interlinię.
+%\linespread{0.9}\selectfont
+
+% --------------------------------------
+
+% Zmniejsz odstęp między wpisami bibliograficznymi.
+%\setlength\bibitemsep{0.4\itemsep}  % tylko dla pakietu `biblatex`
+
+% --------------------------------------
+
+% Zmniejsz odstępy między ilustracją i tekstem.
+\setlength{\textfloatsep}{3pt}
+
+% Zmniejsz odstęp między dwiema ilustracjami.
+\setlength{\floatsep}{3pt}
+
+% Zmniejsz odstępy powyżej i poniżej ilustracji.
+\setlength{\intextsep}{3pt}
+
+% Zmniejsz odstępy między grafiką a podpisem.
+\setlength{\abovecaptionskip}{3pt}
+
+% --------------------------------------
+
+% Zmień formatowanie tytułów (pod)rozdziałów.
+
+\titleformat{\section}{\bfseries\large}{\thesection}{1em}{}
+\titlespacing{\section}{0pt}{1em}{0.5em}
+
+%\titleformat{\subsection}{\bfseries\normalsize}{\thesubsection}{1em}{}
+%\titleformat{\subsubsection}{\bfseries\normalsize}{\thesubsubsection}{1em}{}
+
+%------------------------------------------------------------------------------
+% Configure TikZ/PGFplots
+% SEC: TikZ / PGFplots
+%------------------------------------------------------------------------------
+
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tikzscale}
+
+\usetikzlibrary{calc,shapes,shadows,arrows,positioning,graphs}
+\tikzset{>=latex}
+
+\pgfplotsset{compat=1.8}
+\pgfplotsset{minor grid style={dashed,black!15!white}}	
+\pgfplotsset{major grid style={black!35!white}}	
+
+\usepgfplotslibrary{groupplots}
+
+%------------------------------------------------------------------------------
+% Configure siunitx
+% SEC: siunitx
+%------------------------------------------------------------------------------
+
+\usepackage{siunitx}  % wyświetlanie sformatowanych liczb (m.in. z jednostkami)
+
+\sisetup{%
+	range-phrase = {--},  % używaj półpauzy do oznaczenia zakresu
+	range-units = single,  % nie powtarzaj jednostek przy zakresach
+	group-digits = true,  % grupuj cyfry tysiącami
+	group-separator = {,},  % separator grup zgodny z zapisem w USA
+	output-decimal-marker = {.},  % separator części ułamkowej zgodny z zapisem w USA
+}
+
+\DeclareSIUnit\pixel{px}  % zdefiniuj własną jednostkę - piksel
+
+%------------------------------------------------------------------------------
+% Ustawienia bibliografii.
+% SEC: bibliografia
+%------------------------------------------------------------------------------
+
+\usepackage[
+	backend=biber,
+	style=numeric,
+	sorting=none,
+	%
+	% Zastosuj styl wpisu bibliograficznego właściwy językowi publikacji.
+	language=autobib,
+	autolang=other,
+	%
+	urldate=iso8601,
+	% Nie dodawaj numerów stron, na których występuje cytowanie.
+	backref=false,
+	isbn=true,
+	url=false,
+	%
+	% Ustawienia związane z polskimi normami dla bibliografii.
+	maxbibnames=3,
+]{biblatex}
+
+\addbibresource{pub_sample_bibliography.bib}  % dodaj literaturę z zadanego pliku
+\AtEveryBibitem{\clearfield{note}}  % usuń zawartość pól `note` z pozycji bibliograficznych
+
+\usepackage{csquotes}
+% NOTE: Ponieważ `csquotes` nie posiada polskiego stylu, można skorzystać z mocno zbliżonego stylu chorwackiego.
+\DeclareQuoteAlias{croatian}{polish}
+
+% Zmień sposób formatowania kombinacji "tom + numer + elektroniczne ID" (przydatne przy niektórych czasopismach).
+%\renewbibmacro*{volume+number+eid}{%
+%	\printfield{volume}%
+%	\setunit{\addcomma\space}%
+%	\printfield{number}%
+%	\setunit{\addcomma\space}%
+%	\printfield{eid}}
+
+%------------------------------------------------------------------------------
+% Konfiguracja pakietu `fp`
+% SEC: fp
+%------------------------------------------------------------------------------
+
+\usepackage{fp}
+
+% [NOTE] Polecenie `\FPuse` służy do wyliczania wartości wyrażenia "w miejscu" (tj. żeby od razu użyć wyliczonej wartości np. w innym środowisku).
+\newcommand\FPuse[1]{\FPeval{\result}{#1}\result}
+
+
+% [NOTE] Zdefiniuj polecenie `\numperc` służące do wyświetlania danego ułamka jako procentu (z zadaną liczbą miejsc po przecinku).
+% Przykłady:
+%	\numperc{1} => 100%
+%	\numperc[precision=1]{0.3541} => 35.4%
+\makeatletter
+%
+% [NOTE] Zdefiniuj klucz, z którego będzie korzystało makro.
+%	\define@key{family}{key}{...}
+%	Defines a macro \KV@prefix@key with one argument. When used in a keyval list, the macro receives the value as its argument.
+\define@key{numprec}{precision}{\def\mm@precision{#1}}
+%
+\DeclareDocumentCommand{\numperc}{O{} +m}{%
+	\begingroup%
+	% [NOTE] Ustaw domyślną wartość klucza `first`
+	\setkeys{numprec}{precision={0},#1}%
+	%  
+ 	\FPeval{\result}{#2 * 100}%
+ 	{\num[round-mode=places,round-precision=\mm@precision]{\result}\%}%
+ 	%
+	\endgroup%
+}
+\makeatother
+
+% Wyświetl liczbę z zadaną dokładnością (stałą dla całego dokumentu).
+\newcommand{\dispstat}[1]{\num[round-mode=places,round-precision=2]{#1}}
+
+%------------------------------------------------------------------------------
+% Debuggowanie.
+% SEC: debugging
+%------------------------------------------------------------------------------
+
+% Facilitate the conditional compilation
+\usepackage{etoolbox}  % umożliwia kompilację warunkową [\newtoggle, \toggletrue, \togglefalse, \iftoggle, ...]
+
+\newtoggle{GFXDEBUG}  % zdefiniuj flagę `GFXDEBUG`
+%\togglefalse{GFXDEBUG}
+\toggletrue{GFXDEBUG}  % nadaj fladze `GFXDEBUG` wartość `true`
+
+% Wyświetlenie grafiki z opcją `draft` spowoduje wyświetlenie ramki zamiast faktycznego obrazka - co przyspiesza "robocze" generowanie dokumentu:
+%   \includegraphics[draft]{...}
+% Po zdefiniowaniu polecenia, którego wartość wynosi "draft" w przypadku generowania "roboczego" i "" w przypadku generowania "normalnego" i umieszczeniu go w każdym poleceniu `\includegraphics`, możemy w efektywny sposób zmieniać sposób generowania dla całego dokumentu:
+%   \includegraphics[\draftgraphics]{...}
+\iftoggle{GFXDEBUG}{
+	% Debug ON
+	\newcommand{\draftgraphics}{draft}
+}{
+	% Debug OFF
+	\newcommand{\draftgraphics}{}
+}
+
+%------------------------------------------------------------------------------
+% Konfiguracja listingów (fragmentów kodu).
+% SEC: listings
+%------------------------------------------------------------------------------
+
+\usepackage{listings}
+
+\definecolor{mygreen}{RGB}{28,172,0}
+\definecolor{mylilas}{RGB}{170,55,241}
+\definecolor{mycolor1}{rgb}{0.000,0.502,0.502}
+\definecolor{mycolor2}{rgb}{0.502,0.000,0.502}
+\definecolor{Green}{rgb}{0.1,0.5,0.1}
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+
+\lstloadlanguages{TeX}%
+
+% #include-s etc.
+%	morecomment=[l][\color{magenta}]{\#}
+
+%\lstset{%
+\lstdefinestyle{mytex}{%
+	language=TeX,
+	frame=single,                           %  Single frame around code
+	basicstyle=\small\ttfamily,             %  Use small true type font
+	keywordstyle=[1]\color{Blue}\bfseries,  %  MATLAB functions bold and blue
+	keywordstyle=[2]\color{Purple},         %  MATLAB function arguments purple
+	keywordstyle=[3]\color{Blue}\underbar,  % User functions underlined and blue
+	identifierstyle=,                       % Nothing special about identifiers
+	% Comments small dark green courier
+	commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small,
+	stringstyle=\color{Purple},             % Strings are purple
+	showstringspaces=false,                 % Don't put marks in string spaces
+	tabsize=2,
+	%
+	%%% Put standard language functions not included in the default
+	%%% language here
+	morekeywords={override},
+	%
+	%%% Put language function parameters here
+	morekeywords=[2]{},
+	%
+	%%% Put user defined functions here
+	morekeywords=[3]{},
+	%
+	deletekeywords={},
+	%
+	morecomment=[l][\color{Blue}]{...},     % Line continuation (...) like blue comment
+	numbers=none,
+	%        numbers=left,                           % Line numbers on left
+	firstnumber=1,                          % Line numbers start with line 1
+	numberstyle=\tiny\color{Blue},          % Line numbers are blue
+	stepnumber=5,                           % Line numbers go in steps of 5
+	%  breaklines=true,
+	literate={ą}{{\k{a}}}1
+           {ć}{{\'c}}1
+           {ę}{{\k{e}}}1
+           {ó}{{\'o}}1
+           {ń}{{\'n}}1
+           {ł}{{\l{}}}1
+           {ś}{{\'s}}1
+           {ź}{{\'z}}1
+           {ż}{{\.z}}1
+           {Ą}{{\k{A}}}1
+           {Ć}{{\'C}}1
+           {Ę}{{\k{E}}}1
+           {Ó}{{\'O}}1
+           {Ń}{{\'N}}1
+           {Ł}{{\L{}}}1
+           {Ś}{{\'S}}1
+           {Ź}{{\'Z}}1
+           {Ż}{{\.Z}}1,	
+}
+
+\lstset{style=mytex}
+
+% Spraw, aby asterysk w czcionkach o stałej szerokości (np. Courier) był wyświetlany na wyższym poziomie.
+\makeatletter
+\lst@CCPutMacro
+\lst@ProcessOther {"2A}{%
+	\lst@ttfamily 
+	{\raisebox{2pt}{*}}% used with ttfamily
+	\textasteriskcentered}% used with other fonts
+\@empty\z@\@empty
+\makeatother
+
+%------------------------------------------------------------------------------
+% Varia.
+% SEC: VARIA
+%------------------------------------------------------------------------------
+
+\usepackage{authblk}  % umożliwia podanie afiliacji autorów, gdy różni z różnych jednostek naukowych [\author, \affil]
+
+\newcommand{\Lab}{\mbox{CIE $\textnormal{L}^{*}\textnormal{a}^{*}\textnormal{b}^{*}$}}
+
+% Maksymalna "głębokość" numeracji.
+\setcounter{secnumdepth}{4}
+
+% Polecenie umożliwiające wstawienie "komentarza" w tekście (który nie będzie wyświetlany).
+\newcommand{\ignore}[1]{}
+
+\usepackage{todonotes}  % m.in. znacznik `\todo`
+
+% Ręcznie zdefiniowany znacznik TODO.
+%\newcommand{\todo}[1]{\noindent\colorbox{red}{\textcolor{white}{\bf\textsf{TODO}:}}~\textcolor{red}{#1}}

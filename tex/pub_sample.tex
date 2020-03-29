@@ -1,0 +1,708 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% Szablon manuskryptu publikacji do czasopisma anglojęzycznego.
+%          
+% Autor:  Paweł Kłeczek   (pkleczek@agh.edu.pl)
+%             AGH (Kraków), WEAIiIB, KAiR
+% 
+% Ostatnia modyfikacja: 2018-11-10
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[pdftex,11pt,a4paper]{article}
+
+\input{config}
+
+%------------------------------------------------------------------------------
+% Definicje własnych wykresów.
+% SEC: wykresy
+%------------------------------------------------------------------------------
+
+% [NOTE] Utwórz polecenie `\PlotTDHist` (do generowania histogramów 2D) o trzech parametrach:
+%	#1 - skala wykresu (domyślnie 1.0)
+%	#2 - tytuł wykresu
+%	#3 - nazwa pliku z danymi wykresu
+\newcommand{\PlotTDHist}[3][1.0]%
+{%
+	\pgfmathsetmacro{\plotscale}{#1}%
+	\newcommand{\plottitle}{#2}%
+	\newcommand{\filename}{#3}%
+	% [NOTE]: Polecenie `\input` służy do wklejania zawartości jednego pliku do drugiego (działa podobnie do #include w C/C++).
+	\input{scatter_plot.tikz}%
+}
+
+% [NOTE] Utwórz polecenie `\PlotROC` (do generowania wykresów ROC).
+\newcommand{\PlotROC}[2][1.0]%
+{%
+	\pgfmathsetmacro{\plotscale}{#1}%
+	\newcommand{\filename}{#2}%
+	\input{roc_plot.tikz}%
+}
+
+% =============================================================================
+
+% [NOTE] Te polecenia nie wyświetlają tekstu, tylko służą konfiguracji szablonów wyświetlania w przypadku generowanych stron tytułowych.
+\author[1]{Pawel Kleczek}
+\author[2]{Paulus Kletschek}
+\affil[1]{AGH University of Science and Technology, Department of Automatic Control and Robotics, Krakow, Poland}
+\affil[2]{Dummy University, Department of Dumminess, Nirgendwo, Germania}
+
+% =============================================================================
+
+\begin{document}
+
+% ======================================
+%     Nagłówek z informacją o autorze
+%         (NIE do manuskryptu)
+% ======================================
+
+\null\hfill \textbf{ostatnia modyfikacja: 2018-12-20}
+
+\noindent
+Autor: \textbf{Pawe\l{} K\l{}eczek} (\href{mailto:pkleczek@agh.edu.pl}{\texttt{pkleczek@agh.edu.pl}})
+
+\vspace{0.1cm}
+
+\noindent\rule{\linewidth}{0.4pt}
+
+\vspace{0.5cm}
+
+% ======================================
+
+\noindent
+{\Large\bfseries A sample manuscript}
+
+\noindent
+% [NOTE] NIE stosować polskich znaków w imionach i nazwiskach autorów! To powoduje późniejsze problemy z indeksowaniem takich artykułów w bazach typu WoS...
+Pawel Kleczek$^{1}$
+and Paulus Kletschek$^{2}$
+
+\begin{itemize}
+	\item[] $^{1}$ \quad AGH University of Science and Technology, Department of Automatic Control and Robotics, Krakow, Poland
+	\item[] $^{2}$ \quad Dummy University, Department of Dumminess, Nirgendwo, Germania
+\end{itemize}
+
+
+\noindent
+Correspondence: \texttt{pkleczek@agh.edu.pl}; Tel.: +48 12 617 50 65
+
+\vspace{0.5cm}
+
+\noindent
+\textbf{Abstract}
+
+\par\medskip
+
+\textit{Background:}
+Lorem ipsum dolor sit amet.
+
+\textit{Objectives and methods:}
+Lorem ipsum dolor sit amet
+
+\textit{Results:}
+Lorem ipsum dolor sit amet
+
+\textit{Conclusion:} 
+Lorem ipsum dolor sit amet
+
+\vspace{0.3cm}
+
+\noindent
+\textbf{Keywords:}
+keyword1, keyword2, keyword3
+
+
+% ======================================
+
+\section{Introduction}
+% [NOTE] Umieszczenie polecenia `\label` umożliwia późniejsze odwołanie się w tekście do tej sekcji (odpowiedni numer sekcji w odnośniku zostanie ustawiony automatycznie).
+\label{sec:introduction}
+
+Stworzyłem niniejszy dokument po to, aby ułatwić przygotowywanie manuskryptów publikacji do czasopism anglojęzycznych akceptujących dokumenty złożone z użyciem systemu \LaTeX (albo wręcz wymagających użycia tego systemu).
+%
+Zwróć uwagę na to, że wiele czasopism dostarcza autorowi swoje własne szablony w postaci paczek albo klas, których użycie jest wmagane podczas składu manuskryptu. Niektóre z prezentowanych w tym dokumencie rozwiązań może być niekompatybilnych z takimi szablonami (choć w takich przypadkach starałem się podać w kodzie również rozwiązanie mniej wygodne, ale przynajmniej działające -- korzystające wyłącznie ze standardowych pakietów).
+
+Moim celem nie jest przedstawianie ,,podstaw'' korzystania z \LaTeX-a oraz m.in. takich zagadnień, jak składanie równań czy tworzenie odpowiedniej struktury dokumentu. Postanowiłem skupić się na aspekcie \textit{efektywnego} tworzenia \textit{manuskryptu} -- w takim przypadku ważne jest m.in. zachowanie spójności danych (np. skuteczności metody podawanej w abstrakcie, w sekcji poświęconej omówieniu wyników i w podsumowaniu), możliwość szybkiego generowania nowych wykresów po wprowadzeniu ulepszeń do metody itd.
+
+Jeśli w którymś miejscu tłumaczę rzeczy, które można uznać za ,,podstawy'' (np. użycie twardej spacji), to robię to tylko dlatego, że jestem purystą językowym i boli mnie, że wiele osób nie przestrzega podstawowych zasad dotyczących interpunkcji i składu tekstu -- co często wynika nie z ich złej woli, a zwykłej niewiedzy. Pragnę więc ,,nieść kaganek oświaty'', co (mam nadzieję) będzie z pożytkiem dla nas wszystkich\textellipsis ;)
+
+\par\bigskip
+
+Jeśli stwierdzisz, że moja praca Ci się przydała, lub jeśli masz konstruktywne uwagi odnośnie tego, co poprawić -- daj mi proszę znać, pisząc na adres \href{mailto:pkleczek@agh.edu.pl}{\texttt{pkleczek@agh.edu.pl}}.
+
+
+\section{Material and methods}
+
+\subsection{Preambuła}
+\label{sub:preamble}
+
+Zwróć uwagę, że kolejność pakietów dołączanych w preambule \textbf{ma znaczenie}!
+Czasem zła kolejność prowadzi do błędów kompilacji, gdyż np. pakiet~A redefiniuje standardowe polecenie sposób uniemożliwiający korzystanie w pakiecie~B w sposób zamierzony przez twórców pakietu~B -- wówczas należy zamienić miejscami polecenia \lstinline|\usepackage| dołączające te pakiety.
+
+
+\subsection{Odnośniki}
+\label{sub:references}
+
+Aby odwołać się do sekcji, ilustracji, tabeli lub pozycji w wyliczeniu użyj polecenia \lstinline|\ref|, np.:
+sekcja~\ref{sec:introduction}, rys.~\ref{fig:plot_generation_custom_command_example}, tab.~\ref{tab:threeparttable}, poz.~\ref{itm:enumitem2}.
+Oczywiście wcześniej należy umieścić w/przy odpowiednim elemencie etykietę za pomocą polecenia \lstinline|\label|.
+
+\par\bigskip
+
+W przypadku umieszczania wielu odnośników do pozycji bibliograficznych w ramach elementu \lstinline|\cite|, np. \cite{bibitem1,bibitem2}, \textbf{nie należy} rozdzielać identyfikatorów tych pozycji spacjami -- w przypadku niektórych systemów obsługi bibliografii umieszczanie takich spacji prowadzi to do błędów kompilacji.\\
+Poprawny sposób zapisu: \lstinline|\cite{bibitem1,bibitem2}| (a \textbf{nie} \lstinline|\cite{bibitem1, bibitem2}|).
+
+\par\bigskip
+
+% SEC: \eqref
+
+Aby odwołać się do ponumerowanego równania:
+\begin{equation}\label{eq:equation1}
+a^2 + b^2 = c^2
+\end{equation}
+tak, aby numer był otoczony nawiasami, należy skorzystać z polecenia \lstinline|\eqref|, przykładowo: równanie~\eqref{eq:equation1}.
+
+\subsection{Wyliczenia}
+\label{sub:enumerations}
+
+Aby utworzyć wyliczenie w tekście akapitu, korzystamy ze środowiska \verb|enumerate*| z pakietu \verb|enumitem|:
+\begin{enumerate*}[(1)]
+	% [NOTE] Aby móc odwołać się do danej pozycji wyliczenia, dodaj `\label{ą}`.
+	\item\label{itm:enumitem1} pozycja~1, oraz
+	\item\label{itm:enumitem2} pozycja~2.
+\end{enumerate*}
+Możemy odwoływać się do poszczególnych pozycji wyliczenia za pomocą \lstinline|\ref|, np.: \ref{itm:enumitem1}.
+
+\par\smallskip
+
+W przypadku, jeśli wydawca narzuca użycie pakietu \verb|enumerate|, utworzyć wyliczenie w tekście akapitu musimy użyć środowiska \lstinline|inparaenum|~(zob. przykład~\ref{lst:inparaenum}):
+\begin{lstlisting}[label={lst:inparaenum}]
+\usepackage{enumerate}
+
+\begin{inparaenum}[(1)]
+	\item pozycja 1,
+	\item pozycja 2.
+\end{inparaenum}
+\end{lstlisting}
+O zaletach \verb|enumitem| nad \verb|enumerate| przeczytasz \href{https://tex.stackexchange.com/a/222412/44391}{tutaj}.
+
+\par\smallskip
+
+W przypadku, jeśli wydawca narzuca użycie pakietu \lstinline|enumerate|, aby zmienić rodzaj wyliczenia -- np. na małe litery w nawiasie -- musimy podać parametr opcjonalny \lstinline|label|, np. \lstinline|label=(\alph*)|:
+\begin{enumerate}[label=(\alph*)]
+	\item pozycja~1
+\end{enumerate}
+
+
+\subsection{Skład tekstu}
+\label{sub:typesetting}
+
+% SEC: ~
+
+Pamiętaj, aby (w zasadzie) \textbf{zawsze} stosować twardą spację (w \LaTeX-u: ,,\verb|~|'') m.in. przy podawaniu odnośników do ilustracji i tabel (za pomocą \lstinline|\ref|) oraz do bibliografii (za pomocą \lstinline|\cite|) -- takie są zasady składu (a dodatkowo w ten sposób unikamy ,,przerzucenia'' numeru do nowej linii), np.: \lstinline|Rys.~\ref{fig:fig1}|.
+
+% SEC: \mbox
+W niektórych przypadkach twarde spacje nie działają (np. wokół dywizów i półpauz), dlatego w takich przypadkach należy skorzystać z polecenia \lstinline|\mbox|, np. \lstinline|\mbox{$r$ -- the radius}|.
+
+\par\smallskip
+
+Z polecenia \lstinline|\mbox| korzystamy również wówczas, gdy chcemy zapobiec podziałowi równania umieszczonego w tekście -- porównaj poniższe akapity:
+\begin{enumerate}
+	\item Oto krótki akapit zawierający naprawdę dużą ilość mądrego tekstu oraz pewne równanie $a + b + c + d = 100$, które nie powinno być dzielone pomiędzy wierszami.
+	\item Oto krótki akapit zawierający naprawdę dużą ilość mądrego tekstu oraz pewne równanie \mbox{$a + b + c + d = 100$}, które nie powinno być dzielone pomiędzy wierszami -- tym razem zastosowaliśmy polecenie \lstinline|\mbox|. \textbf{Uwaga:} Należy wówczas tak zredagować tekst, aby równanie nie wchodziło na margines!
+\end{enumerate}
+
+\par\bigskip
+
+% SEC: --
+Pamiętaj, o różnicy między \textbf{pauzą} (in. \textbf{myślnikiem}, ,,---''), \textbf{półpauzą} (,,--'') oraz \textbf{dywizem} (,,-''). Do oznaczania wtrąceń służą półpauzy -- w kodzie \LaTeX-a należy użyć ,,\verb|--|'' (dwa minusy) -- a \textbf{nie} ,,\verb|-|'' (jeden minus)!
+
+\par\smallskip
+
+Podobnie zakresy wartości podajemy zawsze z użyciem półpauzy (np. 1--3), a \textbf{nie} z użyciem dywizu (1-3)!
+
+\par\bigskip
+
+% SEC: ``...''
+W języku angielskim cudzysłowy tzw. drukarskie zapisujemy w formie ``\textellipsis'' (a \textbf{nie}  ,,polskich'' lub tzw. "prostych") -- w tym celu należy pisać \verb|``abc''| (dwa symbole ,,\verb|`|'' oraz dwa symbole apostrofu ,,\verb|'|'').
+
+\par\bigskip
+
+% SEC: odstępy przed jednostkami
+Symbolu procentu nie poprzedzamy spacją: 1\% (a \textbf{nie} 10~\%). Pozostałe wyrażenia ,,wartość + symbol'' składamy za pomocą pakietu \hyperref[sub:siunitx]{\texttt{siunitx}}.
+
+\par\bigskip
+
+% SEC: ith
+
+W przypadku odwołania do ,,$i$-tego'' elementu w języku angielskim zwykło się pisać ,,$i$th'' \textbf{bez} dywizu (w kodzie \LaTeX: \lstinline|$i$th|).
+
+
+\subsection{Ilustracje}
+\label{sub:figures}
+
+
+Rysunek~\ref{fig:plot_generation_custom_command_example} pokazuje użycie zdefiniowanego przez użytkownika polecenia do generowania wykresu.
+
+\begin{figure}[H]
+	\centering
+
+	\newcommand{\plotscale}{0.6}
+	\PlotROC[\plotscale]{data/roc_plot.csv}
+	
+	\caption{\label{fig:plot_generation_custom_command_example}Przykład użycia zdefiniowanego przez nas polecenia do generowania wykresu.}
+\end{figure}
+
+Aby odwołać się w opisie grupy ilustracji do konkretnej ilustracji, użyj \lstinline|\subref{fig:xxx}|~(Rys.~\ref{fig:subrefs}). \textbf{Uwaga:} Polecenie \lstinline|\subref| wymaga poprzedzenia przez \lstinline|\protect| albo skorzstania z \lstinline|\cprotect\caption|!
+Przykład ten dodatkowo pokazuje użycie zdefiniowanych przez użytkownika długości do zachowania spójności układu grupy ilustracji.
+
+\begin{figure}[H]
+	\setlength{\picwidth}{0.3\groupwidth}
+	\setlength{\subfigshsep}{0.05\linewidth}
+
+	\centering
+
+	\begin{subfigure}[c]{\picwidth}
+		\centering
+		\includegraphics[\draftgraphics,width=\textwidth]{images/sample1.jpg}
+		% [NOTE] Polecenie \caption* tworzy podpis bez numeru (np. "(a)").
+		\caption*{Brak ,,numeru'' ilustracji}
+	\end{subfigure}
+
+	\vspace{\subfigsvsepdef}
+
+	\begin{subfigure}[c]{\picwidth}
+		\centering
+		\includegraphics[\draftgraphics,width=\textwidth]{images/sample1.jpg}
+		\caption{Podpis pod ilustracją}
+		\label{fig:sampleX_sub1}
+	\end{subfigure}
+	%
+	\hspace{\subfigshsep}
+	%
+	\begin{subfigure}[c]{\picwidth}
+		\centering
+		\includegraphics[\draftgraphics,width=\textwidth]{images/sample2.jpg}
+		\caption{Abc}
+		\label{fig:sampleX_sub2}
+	\end{subfigure}
+	
+	\cprotect\caption{\label{fig:subrefs} Odwołanie się w opisie do konkretnej ilustracji w grupie: (\subref{fig:sampleX_sub1}) oraz (\protect\subref{fig:sampleX_sub2}).}
+\end{figure}
+
+% ----
+
+Opis musi się zaczynać zaraz za nawiasem klamrowym \verb|}| od \lstinline|\label| -- inaczej zostanie wyświetlona spacja, co widać szczególnie wyraźnie w przypadku długiego podpisu (por. Rys.~\ref{fig:long_caption_with_space}~i~\ref{fig:long_caption_without_space}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[\draftgraphics,height=2cm]{images/dummy.png}
+	\cprotect\caption{\label{fig:long_caption_with_space} W opisie tej ilustracji dodaliśmy spację między nawiasem klamrowym od \verb|\label|, przez co w przypadku długiego opisu widać, że ,,coś jest nie tak'' z odstępem po numerze ilustracji.}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[\draftgraphics,height=2cm]{images/dummy.png}
+	\cprotect\caption{\label{fig:long_caption_without_space}W opisie tej ilustracji \textbf{nie} dodaliśmy spacji między nawiasem klamrowym od \verb|\label|, przez co nawet w przypadku długiego opisu odstępy są prawidłowe.}
+\end{figure}
+
+% ----
+
+\begin{figure}[H]
+	\setlength{\fboxsep}{0pt}  % określa odległość ramki od obrazu
+	\setlength{\fboxrule}{2pt}  % określa grubość ramki
+	
+	\centering
+
+	\fbox{\includegraphics[\draftgraphics,height=1cm]{images/img1.jpg}}
+	
+	% [NOTE] Długość `\captionmargin` określa rozmiar marginesu po każdej ze stron podpisu.
+	\setlength{\captionmargin}{2cm}
+	\cprotect\caption{\label{fig:fbox}Tworzenie ramki wokół grafiki za pomocą polecenia \verb|\fbox|.}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[\draftgraphics,height=3cm]{images/border_normals.png}
+	\cprotect\caption{\label{fig:border_normals}Stosowanie pewnych poleceń środowiska matematycznego w podpisie wymaga użycia \lstinline|\cprotect| przed \lstinline|\caption| albo poprzedzania każdego takiego ,,trefnego'' polecenia matematycznego poleceniem \lstinline|\protect|, np.: 
+	$\overrightarrow{P_i}$, $f_\protect\mathrm{x}$.}
+\end{figure}
+
+% ----
+
+Rysunki \ref{fig:minipage_figl} i \ref{fig:minipage_figr} (dwa w jednym rzędzie) zostały wykonane z użyciem środowiska \lstinline|figure*| w połączeniu ze środowiskami \lstinline|minipage| -- nie ma możliwości umieszczenia wielu środowisk \lstinline|figure| w jednym rzędzie.
+
+\begin{figure*}
+	\newlength{\figlwidth}  % szerokość lewej ilustracji
+	\newlength{\figrwidth}  % szerokość prawej ilustracji
+	\setlength{\figlwidth}{.4\linewidth}
+	\setlength{\figrwidth}{\linewidth - \figlwidth}  % cała grupa zajmuje pełną szerokość linii
+
+	\setlength{\imgheight}{3cm}
+	
+	% [NOTE] Musimy zmniejszyć margines na tyle, żeby podpisy się nie "rozjeżdżały".
+	\setlength{\captionmargin}{0.5cm}
+	
+	\centering
+	\begin{minipage}[b]{\figlwidth}
+		\centering
+		% [TODO-PK] ew. pokazać z użyciem "natwidth=NW, natheight=NH"
+		\includegraphics[\draftgraphics,height=\imgheight,width=\linewidth]{images/img1.png}
+	\end{minipage}%
+	\hspace*{0.2cm}
+	\begin{minipage}[b]{\figrwidth}
+		\centering
+		\includegraphics[\draftgraphics,height=\imgheight,width=\linewidth]{images/img2.png}
+	\end{minipage}\\[-4pt]  % [NOTE] Konieczne ręczne wyrównanie odległości między grafikami a podpisem, aby była ona spójna ze środowiskiem `figure`.
+	\begin{minipage}[t]{\figlwidth}
+		\centering
+		\caption{Lewa ilustracja.}
+		\label{fig:minipage_figl}
+	\end{minipage}%
+	\hspace*{0.2cm}
+	\begin{minipage}[t]{\figrwidth}
+		\centering
+		\cprotect\caption{Prawa ilustracja zawiera dłuższy podpis. Należy ustawić wartość długości \lstinline|\captionmargin| tak, aby się on nie rozjeżdżał.}
+		\label{fig:minipage_figr}
+	\end{minipage}%
+	\hspace*{0.3cm}
+\end{figure*}
+
+\subsection{Tabele}
+\label{sub:tables}
+
+Proste, eleganckie tabele tworzymy za pomocą środowiska \texttt{tabularx}, np. Tab.~\ref{tab:simple_tabularx}. Środowisko to pozwala m.in. zdefiniować \textit{bezwzględną} szerokość całej tabeli oraz \textit{względną} szerokość poszczególnych kolumn.
+
+\begin{table}[H]
+	\centering
+	
+	\caption{Prosta tabela utworzona za pomocą środowiska \texttt{tabularx}.}
+	\label{tab:simple_tabularx}
+	
+	% [NOTE] Zmień wysokość wiersza, aby uzyskać więcej światła (i tym samym poprawić czytelność tabeli).
+	\renewcommand{\arraystretch}{1.3}
+	
+	% [NOTE] Zmień odstęp między kolumnami, aby uzyskać więcej światła (i tym samym poprawić czytelność tabeli).
+	\setlength{\tabcolsep}{4mm}	
+	
+	% [NOTE] Cała tabela zajmuje 90% szerokości wiersza, a (trzy) kolumny kolejno: 0.8/N, 1.6/N oraz 0.6/N szerokości tabeli, gdzie N to liczba kolumn. UWAGA: Wartości podane w parametrach `\hsize` muszą się sumować do N!
+	\begin{tabularx}{0.9\textwidth}{>{\hsize=0.8\hsize}X >{\hsize=1.6\hsize}X >{\hsize=0.6\hsize}X}
+		\toprule
+		\textbf{A} & \textbf{B} & \textbf{C} \\
+		\midrule
+		a & b & c \\
+		\midrule
+		d & e & f \\
+		\bottomrule
+	\end{tabularx}
+	
+\end{table}
+
+\par\bigskip
+
+Czasem potrzebujemy umieścić na dole tabeli przypisy -- wówczas ,,opakowujemy'' środowisko \texttt{tabularx} w środowisko \lstinline|threeparttable| (zob.~Tab.~\ref{tab:threeparttable}). Przypisy w ,,treści'' tabeli dodawane są za pomocą polecenia \lstinline|\tnote|, natomiast ich opis umieszcza się w środowisku \lstinline|tablenotes|.
+
+\begin{table}[H]
+	\centering
+	
+	\begin{threeparttable}
+		\cprotect\caption{Tabela utworzona za pomocą środowiska \lstinline|threeparttable|.}
+		\label{tab:threeparttable}
+		
+		% [NOTE] Ustaw odpowiednie formatowanie nagłówków tabeli utworzonych za pomocą polecenia `\thead`.
+		\renewcommand\theadfont{\bfseries}
+		
+		\begin{tabularx}{0.9\linewidth}{>{\hsize=.8\hsize}X>{\hsize=1.4\hsize}X>{\hsize=.8\hsize}X}
+			\toprule
+			% [NOTE] Utwórz spójne nagłówki tabeli z pomocą pakietu `makecell`.
+			\thead{A} & \thead{B} & \thead{C} \\
+			\midrule
+			x & y & XXX\tnote{a} \\
+			& qrst & XXX \\
+			\bottomrule
+		\end{tabularx}
+		
+		\begin{tablenotes}
+		   	\footnotesize
+		   	\item[a] przypis w tabeli
+		\end{tablenotes}
+	 		
+	\end{threeparttable}
+\end{table}
+
+Tabela~\ref{tab:table_with_graphics} zawiera kolumnę typu ,,akapit teksu'' (\lstinline|m{...}|) oraz grafiki. Zwróć uwagę, że w przypadku tabel zawierających kolumny takiego typu nie możemy stosować domyślnego sybolu końca wiersza ,,\lstinline|\\|'' (bo byłby konflikt ze znakiem nowego wiersza w akapicie) -- zamiast tego stosujemy polecenie \lstinline|\tabularnewline|.
+
+\begin{table}[H]
+	\setlength{\imgheight}{1cm}
+	
+	\centering
+	
+	\caption{\label{tab:table_with_graphics}Tabela zawierająca grafiki, utworzona za pomocą środowiska \lstinline|tabular|.}
+	
+	% [FIXME-PK]: Jak wyrównać kolumny z liczbami względem kropki dziesiętnej (do prawej strony?) w takiej złożonej tabeli?
+	% https://tex.stackexchange.com/questions/47422/siunitx-how-to-deal-with-invalid-numerical-input
+	\begin{tabular}{m{3cm} ccc}
+		\toprule
+		% [NOTE] Aby ilustracje nie rozjeżdżały się w przypadku szerszego wiersza, należy je wyrównać w pionie do środka - za pomocą opcjonalnego argumentu `align=c` z pakietu `graphbox`.
+		Original image &
+		 \includegraphics[\draftgraphics,height=\imgheight, align=c]{images/A.png}  &
+		 \includegraphics[\draftgraphics,height=\imgheight, align=c]{images/B.png}  &
+		 \includegraphics[\draftgraphics,height=\imgheight, align=c]{images/C.png}
+		\tabularnewline
+		%
+		\midrule
+		%
+		% [NOTE] W przypadku tabel zawierających kolumny typu `m{}` nie możemy stosować domyślnego sybolu końca wiersza `\\` (bo byłby konflikt ze znakiem nowego wiersza w akapicie) - zamiast tego stosujemy polecenie `\tabularnewline`.
+		Area1 & 0.10 & -0.09 & -0.13 \tabularnewline
+		Area2 & 0.1 & 0.02 & 10 \tabularnewline
+		\bottomrule
+	\end{tabular}
+	
+\end{table}
+
+\par\bigskip
+
+Tabela~\ref{tab:multi_table} zawiera komórki scalone ze sobą w wierszach i w kolumnach. Polecenie \lstinline|\cline| służy do rysowania poziomej krawędzi tylko w zadanych kolumnach.
+
+\begin{table}[h]
+	\centering
+	\caption{\label{tab:multi_table}Macierz pomyłek}
+	
+	\renewcommand{\arraystretch}{1.3}
+	
+	\begin{tabularx}{0.9\textwidth}{C{1} C{0.4} C{1.8} C{1.8}}
+		\toprule
+		& & \multicolumn{2}{ C{3.6} }{obserwowane klasy rzeczywiste} \\
+		\cmidrule(lr){3-4}
+		& & \raisebox{0.3em}{$\boldsymbol{\oplus}$} & \raisebox{0.3em}{$\boldsymbol{\ominus}$} \\ \cline{1-4}
+		\multicolumn{1}{ C{1}  }{\multirow{2}{\linewidth}[-6pt]{przewidywane\\klasy\\decyzyjne} } &
+		\multicolumn{1}{ Y }{$\boldsymbol{\oplus}$} & Prawdziwie Pozytywne \newline (TP -- \textit{True Positives}) & Fałszywie Pozytywne \newline (FP -- \textit{False Positives}) \\
+		\multicolumn{1}{ Y }{} &
+		\multicolumn{1}{ Y }{$\boldsymbol{\ominus}$} & Fałszywie Negatywne \newline (FN -- \textit{False Negatives}) & Prawdziwie Negatywne \newline (TN -- \textit{True Negatives}) \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+
+\par\bigskip
+
+Dodatkowe wskazówki odnośnie tworzenia eleganckich tabeli: \href{https://www.inf.ethz.ch/personal/markusp/teaching/guides/guide-tables.pdf}{Small Guide to Making Nice Tables (Markus Püschel)}
+
+
+\subsection{Pakiet \lstinline|siunitx|}
+\label{sub:siunitx}
+
+Pakiet \lstinline|siunitx| to potężne narzędzie umożliwiające efektywny skład tekstów zawierających wielkości -- niekoniecznie fizyczne. Ogólnie chodzi o wszelkie wyrażenia w postaci ,,wartość + jednostka''.
+
+\par\bigskip
+
+% SEC: \SI, \SIrange; tekst vs. półpauza
+
+Pojedyncze wielkości wyświetlaj za pomocą polecenia \lstinline|\SI|, np. \SI{5}{\micro\meter}.
+%
+Zakresy wielkości wyświetlaj za pomocą polecenia \lstinline|\SIrange|, np. \SIrange{1}{3}{\micro\meter}.
+%
+Aby zamiast półpauzy użyć słowa (np. ,,\textit{to}''), skorzystaj z opcji \lstinline|range-phrase={ to }|, np. \SIrange[range-phrase={ to }]{1}{3}{\micro\meter}.
+
+\par\bigskip
+
+% SEC: zaokrąglanie
+
+Za pomocą opcji \lstinline|round-mode=places| w połączeniu z \lstinline|round-precision=N| możesz kontrolować wyświetlaną liczbę miejsc po przecinku, np. dla \lstinline|\num[round-mode=places,round-precision=2]{0.009}|: \num[round-mode=places,round-precision=2]{0.009}.
+
+\par\bigskip
+
+% SEC: per-mode=symbol
+
+Domyślnie ,,na'' (np. ,,radiany \textit{na} sekundę'') wyświetlane jest jako potęga o ujemnym wykładniku (\SI{0.1}{\radian\per\second}).
+Aby ,,na'' było wyświetlany jako symbol ,,/'', należy użyć argumentu \lstinline|per-mode=symbol|: \SI[per-mode=symbol]{0.1}{\radian\per\second}.
+
+\par\bigskip
+
+% SEC: "ręczna" definicja jednostek
+
+Jeśli potrzebujesz skorzystać z niestandardowej jednostki (np. piksel), możesz ją zdefiniować ręcznie za pomocą polecenia \lstinline|\DeclareSIUnit|, np. \lstinline|\DeclareSIUnit\pixel{px}|.
+
+\par\bigskip
+
+
+% SEC: \num (zmiana czcionki!)
+
+Zwróć uwagę, że cyfry wyświetlane z użyciem \lstinline|\num| mają nieco inny krój, niż cyfry w zwykłym tekście: zwykły tekst -- 123, \lstinline|\num| -- \num{123}.
+
+
+\cprotect\subsection{Pakiet \lstinline|fp|}
+
+Pakiet \lstinline|fp| pozwala m.in. na definiowanie stałych zmiennoprzecinkowych oraz na wykonywanie na nich operacji arytmetycznych -- dzięki czemu znakomicie nadaje się do parametryzacji manuskryptu (np. liczba próbek, wartości skuteczności algorytmu, parametry wykresów itd.).
+
+\par\bigskip
+
+Do definiowania stałych służy polecenie \lstinline|\FPeval|, np. \lstinline|\FPeval{\inta}{(1)}|.
+
+% [NOTE] Wartości w poleceniach `\FPeval` należy umieszczać w nawiasach okrągłych, m.in. po to, aby poprawnie działały wartości ujemne (inaczej w pewnych przypadkach występują błędy parsowania - zob. niżej).
+\FPeval{\ncorrect}{(6)}
+\FPeval{\nincorrect}{(10)}
+
+\FPeval{\myfpfloatpositive}{(0.207)}
+\FPeval{\myfpfloatnegative}{(-0.500)}
+
+% [NOTE] Brak nawiasów spowoduje błędy kompilacji ("FP error: UPN stack is empty!").
+% \FPeval{\myfpfloatnegativenoparentheses}{-0.300}
+
+% [NOTE] Polecenie `\FPeval` umożliwia wykonywanie prostych operacji arytmetycznych.
+\FPeval{\accuracy}{\ncorrect / (\ncorrect + \nincorrect)}
+
+\par\bigskip
+
+Warto zdefiniować polecenie, z którego będziemy korzystać w całym dokumencie dla wyświetlania ,,standardowych'' wyników ułamkowych z zadaną dokładnością (jednolitą dla całego dokumentu), \linebreak np. \lstinline|\dispstat{\accuracy}| -- \dispstat{\accuracy}.
+
+Niniejszy dokument definiuje polecenie \lstinline|\numperc| służące do wyświetlania ułamka jako procentu (z zadaną liczbą miejsc po przecinku), np.: \lstinline|\numperc{0.767}| -- \numperc{0.767}, \lstinline|\numperc[precision=1]{0.76732}| -- \numperc[precision=1]{0.76732}.
+
+% ----
+
+% SEC: polecenia \FPeval w osobnym pliku
+
+% [NOTE] Definicje wartości (tj. polecenia `\FPeval`) wygodnie jest umieścić w osobnym pliku, generowanym np. z poziomu MATLAB-a (wtedy podmiana wyników polega na podmianie pojedynczego pliku).
+\input{results_fp}
+
+% ----
+
+% SEC: nawiasy klamrowe wokół makr fp
+
+\FPeval{\inta}{(8)}
+
+Odwołując w tekście się do wartości zdefiniowanych za pomocą \lstinline|\FPeval| (np. \lstinline|\FPeval{\inta}{1}|) należy umieścić je wewnątrz nawiasów klamrowych -- inaczej nie zostaną dodane spacje wokół wartości. Porównaj: wersja bez klamer -- ,,tekst \inta tekst'', wersja z klamrami -- ,,tekst {\inta} tekst''.
+
+\subsection{Pakiet \lstinline|pgfplots|}
+\label{sub:pgfplots}
+
+Pakiet \lstinline|fp| przydaje się m.in. podczas generowania histogramów, w przypadku których pierwszy i ostatni z przedziałów klasowych zawiera wszystkie wartości odpowiednio mniejsze albo większe od wartości skrajnych (np. $(-\infty, l)$ i $(r, +\infty)$) -- taką stytuację warto bowiem opisać w podpisie histogramu, a dzięki użyciu poleceń \lstinline|\FPeval| zachowujemy spójność między kodem użytym do wygenerowania histogramu, a opisem w kodzie \LaTeX.
+%
+Jeśli prostokąty na histogramie wyglądają ,,dziwnie'' (np. zlewają się ze sobą), należy dobrać odpowiednią wartość parametru \lstinline|bar width| w odpowiednim elemencie środowiska \lstinline|tikzpicture|.
+
+\begin{figure}[H]
+	\setlength{\imgwidth}{10cm}
+	\setlength{\imgheight}{3cm}
+	
+	% [NOTE] Wczytaj wartości parametrów konfiguracyjnych histogramu z pliku.
+	\input{data/histogram_simple_fp}
+
+	\centering
+	\input{histogram_simple.tikz}
+	% [NOTE] Wartości krańców przedziałów klasowych zostały umieszczone w pliku `histogram_simple_fp`.
+	\caption{\label{fig:histogram_simple}A simple histogram (the first bin also includes all values smaller than \num[round-mode=places,round-precision=2]{\xmin} and the last bin also includes all values larger than \num[round-mode=places,round-precision=2]{\xmax}).}
+\end{figure}
+
+
+\begin{figure}[H]
+	\setlength{\imgwidth}{15cm}
+	\setlength{\imgheight}{6cm}
+
+	\input{data/histogram_groupped_fp}
+
+	\centering
+	\input{histogram_groupped.tikz}
+	\caption{\label{fig:histogram_groupped}A groupped histogram.}
+\end{figure} 
+
+\subsection{Spacing}
+
+% SEC: podział strony (\newpage, \pagebreak)
+
+Aby dokonać podziału stron w taki sposób, aby jej zawartość została równomiernie rozłożona na całej wysokości strony, skorzystaj z polecenia \lstinline|\pagebreak|. Polecenie \lstinline|\newpage| pozostawia pusty obszar u dołu strony.
+
+\par\bigskip
+
+% SEC: Lengths and when to use them
+
+Zapoznaj się z zasadami stosowania poszczególnych typów poleceń wstawiających puste przestrzenie (np. \lstinline|\hspace|, \lstinline|\hspace*| itd.): \href{https://tex.stackexchange.com/a/41488/44391}{Lengths and when to use them (Stack Overflow)}.
+
+\par\bigskip
+
+% SEC: \<xxx>skip
+
+Czasem warto dodać nieco światła między akapitami -- w tym celu skorzystaj z kombinacji polecenia \lstinline|\par| i jednego z poleceń z grupy \lstinline|\<small/med/big>skip|, np.:
+
+\par\smallskip
+
+\noindent
+Lorem ipsum dolor sit amet\textellipsis 
+
+\noindent
+Lorem ipsum dolor sit amet\textellipsis (bez \verb|\par\smallskip|)
+
+\par\smallskip
+
+\noindent
+Lorem ipsum dolor sit amet\textellipsis (po \verb|\par\smallskip|)
+
+
+\subsection{Tips \& tricks}
+
+W przypadku, gdy potrzebujesz wykonać pewną niestandardową operację wielokrotnie (czyli więcej niż \textbf{raz}) -- np. użyć nazwy przestrzeni barw \mbox{CIE $\textnormal{L}^{*}\textnormal{a}^{*}\textnormal{b}^{*}$}: \\
+\hspace*{3em}\lstinline|CIE $\textnormal{L}^{*}\textnormal{a}^{*}\textnormal{b}^{*}$| \\
+lub wygenerować wykresy identycznego typu, tyle że ze zmienionymi danymi (np. jak na Rys.~\ref{fig:scatter_plots}), wygodnie jest zdefiniować w preambule odpowiednie polecenie za pomocą polecenia \lstinline|\newcommand|.
+
+\begin{figure}[H]
+	\setlength{\imgwidth}{5cm}
+	\setlength{\imgheight}{5cm}
+
+	\centering
+	
+	\begin{subfigure}[c]{0.45\linewidth}
+		% [NOTE] Polecenie `\PlotTDHist` zostało zdefiniowane przez użytkownika.
+		\PlotTDHist{scatter1}{data/scatter1.csv}
+	\end{subfigure}
+	\begin{subfigure}[c]{0.45\linewidth}
+		\PlotTDHist{scatter2}{data/scatter2.csv}
+	\end{subfigure}
+	
+	\caption{\label{fig:scatter_plots}Wiele wykresów punktowych korzystających z tych samych parametrów konfiguracyjnych.
+	}
+\end{figure}
+
+\par\bigskip
+
+Warto oznaczać miejsca, w których coś jeszcze należy zmienić, za pomocą odpowiednik znaczników ,,TODO'' -- np. z użyciem polcenia \lstinline|\todo| z pakietu \lstinline|todonotes|, np.: tu\todo[inline]{Do poprawy.} należy coś poprawić.
+
+\par\bigskip
+
+Wygodnie jest zdefiniować ,,puste'' polecenie, które będzie służyło do wstawiania ,,komentarza'' w tekście -- w tym szablonie służy do tego \lstinline|\ignore|. Przykładowo, kod \lstinline|abc\ignore{xx} def| wyświetlany jest jako ,,abc\ignore{xx} def''.
+
+
+\subsection{Bibliografia}
+
+Zakres numerów stron zapisuj z użyciem półpauzy (zob. rozdz.~\ref{sub:typesetting}), czyli w postaci \lstinline|p1--p2| (za pomocą dwóch minusów).
+
+\section{Results}
+
+\section{Conclusions}
+
+% SEC: sekcje nienumerowane
+
+% [NOTE] Zwróć uwagę, że sekcję "Acknowledgments" wstawia się zwyczajowo bez numeracji - w tym celu należy stosować polecenie "z gwiazdką" (<typ_sekcji>*).
+\section*{Acknowledgments}
+
+This work was supported by the Dummy University based on the decision number XXX/YY.
+
+% -----------
+
+% SEC: \appendix
+% [NOTE] Polecenie `\appendix` zmienia styl numeracji sekcji na zgodny ze stylem appendiksów (tj. na duże litery łacińskie).
+\appendix
+
+\section{SECTION 1}
+
+\section{SECTION 2}
+
+% -----------
+
+Aby zmusić \LaTeX-a do umieszczenia w danym miejscu w tekście wszystkich ilustracji ze schowka i dopiero później umieszczenie kolejnego fragmentu tekstu \textbf{bez wstawiania podziału strony} użyj polcenia \lstinline|\afterpage{\clearpage}| z pakietu \lstinline|afterpage| (inaczej może się okazać, że ilustracja ze strony 3 znajdzie się na stronie 5\textellipsis).
+
+\afterpage{\clearpage}  % pakiet: afterpage
+
+% -----------
+
+\printbibliography
+
+\end{document}
+

@@ -1,0 +1,47 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+%
+
+\begin{tikzpicture}
+
+\pgfmathsetmacro{\xminpt}{\xmin - \binwidth / 2}
+\pgfmathsetmacro{\xmaxpt}{\xmax + \binwidth / 2}
+
+\begin{axis}[%
+width=\imgwidth,
+height=\imgheight,
+scale only axis,
+bar shift auto,
+bar width=\binwidth,
+xmin=\xminpt,
+xmax=\xmaxpt,
+%
+xlabel style={font=\color{white!15!black}},
+xlabel={$\delta x$},
+ymin=0,
+%
+% [NOTE] Wartość `ymax` należy dostosować do liczby próbek w najliczniejszym przedziale klasowym.
+ymax=\ymaxaxis,
+%
+ylabel style={font=\color{white!15!black}},
+ylabel={\# of cases},
+axis background/.style={fill=white},
+title style={font=\bfseries},
+title={Relative errors},
+xtick pos=left,
+]
+% [NOTE] Dane odczytywane z pliku w formacie TSV, w którym wiersze oddzielone są symbolem nowej linii. Aby wczytać dane z formatu CSV, użyj argumentu `col sep=comma`.
+\addplot[ybar, fill=mycolor1, draw=black, area legend] table[col sep=tab,row sep=newline]{data/histogram_simple.tsv};
+
+\addplot[forget plot, color=white!15!black] table[row sep=crcr, col sep=comma] {%
+\xminpt,0\\
+\xminpt,0\\
+};
+
+\end{axis}
+\end{tikzpicture}%

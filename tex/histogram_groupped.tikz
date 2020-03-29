@@ -1,0 +1,50 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+%
+\begin{tikzpicture}
+
+\pgfmathsetmacro{\xminpt}{\xmin - \binwidth / 2}
+\pgfmathsetmacro{\xmaxpt}{\xmax + \binwidth / 2}
+
+\begin{axis}[%
+width=\imgwidth,
+height=\imgheight,
+scale only axis,
+bar width=\binwidth,
+xmin=\xminpt,
+xmax=\xmaxpt,
+% [NOTE] Wartość `xtick` należy dostosować do danych.
+%xtick={ 50, 100, 150, 200, 250, 300, 350, 400},
+xlabel style={font=\color{white!15!black}},
+xlabel={$x$},
+ymin=0,
+ymax=\ymaxaxis,
+ylabel style={font=\color{white!15!black}},
+ylabel={\# of cases},
+axis background/.style={fill=white},
+title style={font=\bfseries},
+title={\% of cases in group \#2},
+xtick pos=left,
+legend style={legend cell align=left, align=left, at={(0.1,0.97)}, anchor=north, draw=white!15!black}
+]
+\addplot[ybar stacked, fill=mycolor1, draw=black, area legend] table[col sep=tab,row sep=newline]{data/histogram_groupped_data1.tsv};
+\addlegendentry{group 1}
+
+\addplot[ybar stacked, fill=mycolor2, draw=black, area legend] table[col sep=tab,row sep=newline]{data/histogram_groupped_data2.tsv};
+\addlegendentry{group 2}
+
+\addplot[forget plot, color=white!15!black] table[row sep=crcr, col sep=comma] {%
+\xminpt,0\\
+\xminpt,0\\
+};
+
+\input{data/histogram_groupped_labels}
+
+\end{axis}
+\end{tikzpicture}%

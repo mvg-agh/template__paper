@@ -1,0 +1,14 @@
+\begin{tikzpicture}
+\pgftransformscale{\plotscale}
+\begin{axis}[
+xmin=0,   xmax=1,
+ymin=0,   ymax=1,
+grid=major,
+xtick style={draw=none},
+ytick style={draw=none},
+xlabel={$1 - \mathrm{TNR}$},
+ylabel={$\mathrm{TPR}$},
+]
+\addplot[mark=none, red, ultra thick] table[x=X, y=Y, col sep=comma] {\filename};
+\end{axis}
+\end{tikzpicture}

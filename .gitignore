@@ -1,0 +1,73 @@
+# A generic .gitignore file.
+# ============================================================================
+
+### Non-standard entries
+
+## Auto-generated .tex files (e.g., in MATLAB projects)
+/pub/*.tex
+
+
+### "Permanent" files
+
+## Documents
+*.pdf
+
+## Images & graphics
+#*.png
+#*.tif
+#*.jpg
+#*.ps  # PostScript
+#*.cdr  # Corel Draw
+
+
+### Auxiliary and temporary files
+
+## OpenOffice
+*.*#
+
+## TeX-related
+*.log
+*.aux
+*.bbl
+*.dvi
+*.synctex
+*.blg
+*.bak
+*.bcf
+*.toc
+*.spl
+*.cpt
+*.run.xml
+*.synctex.gz*
+*-blx.bib
+# `minitoc` package
+*.mtc*
+*.mlf*
+*.mlt*
+*.maf*
+
+## TeXstudio
+/*.txss
+
+## JabRef
+*.bib.sav
+
+# Beamer
+*.nav
+*.out
+*.snm
+
+## Matlab
+*.asv
+
+## LyX
+*.lyx~
+
+## WinShell
+*.Wsave
+
+## GitEye
+/.project
+
+## MacOS
+.DS_Store

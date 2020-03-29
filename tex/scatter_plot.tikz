@@ -1,0 +1,28 @@
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+%
+\begin{tikzpicture}
+\pgftransformscale{\plotscale}
+\begin{axis}[%
+width=\imgwidth,
+height=\imgheight,
+scale only axis,
+xmin=40,
+xmax=220,
+xtick={ 50,  70,  90, 110, 130, 150, 170, 190, 210},
+xlabel style={font=\color{white!15!black}},
+xlabel={width [px]},
+ymin=40,
+ymax=420,
+ytick={ 50,  90, 130, 170, 210, 250, 290, 330, 370, 410},
+ylabel style={font=\color{white!15!black}},
+ylabel={length [px]},
+axis background/.style={fill=white},
+title style={font=\bfseries},
+title={\plottitle},
+axis x line*=bottom,
+axis y line*=left,
+legend style={legend cell align=left, align=left, draw=white!15!black}
+]
+\addplot[scatter, only marks, mark=*, color=mycolor1, mark options={}, scatter/use mapped color={mark options={}, draw=mycolor1, fill=mycolor1}, visualization depends on={\thisrow{size} \as \perpointmarksize}, scatter/@pre marker code/.append style={/tikz/mark size=\perpointmarksize}] table[x=x, y=y, row sep=newline, col sep=comma]{\filename};
+\end{axis}	
+\end{tikzpicture}
